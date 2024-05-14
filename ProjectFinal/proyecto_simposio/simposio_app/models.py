@@ -1,6 +1,7 @@
 # simposio_app/models.py
 from django.db import models
 
+
 class Estudiante(models.Model):
     nombres = models.CharField(max_length=100)
     apellidos = models.CharField(max_length=100)
@@ -12,7 +13,6 @@ class Estudiante(models.Model):
     semestre_o_ciclo = models.CharField(max_length=50)
     boleta_de_pago = models.ImageField(upload_to='boletas_de_pago/')
     talla_de_camiseta = models.CharField(max_length=10)
-    qr_code = models.ImageField(upload_to='qr_codes/', blank=True, null=True)
 
     def __str__(self):
         return f"{self.nombres} {self.apellidos}"
@@ -25,9 +25,11 @@ class Expositor(models.Model):
     telefono = models.CharField(max_length=15)
     especialidad = models.CharField(max_length=100)
     institucion = models.CharField(max_length=100)
+    tema_a_impartir = models.CharField(max_length=255)
 
     def __str__(self):
         return f"{self.nombres} {self.apellidos}"
+
 
 class Pago(models.Model):
     estudiante = models.ForeignKey(Estudiante, on_delete=models.CASCADE)

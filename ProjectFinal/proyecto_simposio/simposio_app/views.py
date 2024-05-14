@@ -15,10 +15,9 @@ def index(request):
 
 def registrar_estudiante(request):
     if request.method == 'POST':
-        # Procesar los datos del formulario de estudiante
         form = EstudianteForm(request.POST, request.FILES)
         if form.is_valid():
-            estudiante = form.save()
+            estudiante = form.save(commit=False)
 
             # Generar el código QR
             qr_data = f"Carnet: {estudiante.carnet}, Nombre: {
@@ -29,20 +28,32 @@ def registrar_estudiante(request):
             qr_path = f'media/qrcodes/{estudiante.carnet}.png'
             qr.save(qr_path)
 
-            # Guardar la ruta del código QR en el modelo Estudiante
-            estudiante.qr_code.save(
-                f'{estudiante.carnet}.png', open(qr_path, 'rb'))
+            # Enviar el código QR por correo electrónico
+            enviar_correo_con_qr(estudiante.correo_electronico, qr_path)
+
+            # Guardar el estudiante en la base de datos
             estudiante.save()
 
-            # Enviar el código QR por correo electrónico
-            enviar_correo_con_qr(estudiante)
-
-            # Redirigir o mostrar algún mensaje de éxito
             return HttpResponse("El estudiante ha sido registrado exitosamente.")
     else:
         form = EstudianteForm()
 
     return render(request, 'formulario_registro_estudiante.html', {'form': form})
+
+
+def enviar_correo_con_qr(correo_electronico, qr_path):
+    # Configurar el correo electrónico
+    email = EmailMessage(
+        subject='Confirmación de asistencia al simposio',
+        body='¡Gracias por registrarte! Adjunto se encuentra tu código QR para ingresar al evento.',
+        to=[correo_electronico],
+    )
+
+    # Adjuntar el código QR al correo electrónico
+    email.attach_file(qr_path)
+
+    # Enviar el correo electrónico
+    email.send()
 
 
 def registrar_expositor(request):
@@ -62,7 +73,7 @@ def registrar_expositor(request):
     return render(request, 'formulario_registro_expositor.html', {'form': form})
 
 
-def enviar_correo_con_qr(estudiante):
+def enviar_correo_con_qr2(estudiante):
     # Configurar el correo electrónico
     email = EmailMessage(
         subject='Confirmación de asistencia al simposio',
