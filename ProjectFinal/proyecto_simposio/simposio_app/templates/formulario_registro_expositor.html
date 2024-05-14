@@ -1,0 +1,18 @@
+<!-- formulario_registro_expositor.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Expositor</title>
+</head>
+<body>
+    <h2>Registro de Expositor</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Registrar</button>
+    </form>
+</body>
+</html>
