@@ -93,13 +93,16 @@ DATABASES = {
 """
 
 
-'''
-database
-'''
-DATABASES = {
-    "default": dj_database_url.parse(os.environ.get('DATABASE_URL'))
-}
 
+# Obtener la cadena de conexión de la variable de entorno y decodificarla si es necesario
+database_url = os.environ.get('DATABASE_URL')
+if isinstance(database_url, bytes):
+    database_url = database_url.decode('utf-8')
+
+# Parsear la cadena de conexión usando dj_database_url
+DATABASES = {
+    "default": dj_database_url.parse(database_url)
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
