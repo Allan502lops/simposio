@@ -10,8 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
-from pathlib import Path
 import dj_database_url
+from pathlib import Path
 import os
 
 
@@ -78,30 +78,14 @@ WSGI_APPLICATION = 'proyecto_simposio.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-"""
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'students',
-        'USER': 'postgres',
-        'PASSWORD': '33430250',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}
-"""
-# Obtener la cadena de conexión de la variable de entorno y decodificarla si es necesario
-database_url = os.environ.get('DATABASE_URL')
-if isinstance(database_url, bytes):
-    database_url = database_url.decode('utf-8')
 
-# Convertir la cadena de conexión a bytes
-database_url_bytes = database_url.encode('utf-8')
-
-# Parsear la cadena de conexión usando dj_database_url
+# Si la variable de entorno DATABASE_URL está configurada en Render, la usaremos.
+# De lo contrario, utilizaremos una configuración de base de datos local para desarrollo.
 DATABASES = {
-    "default": dj_database_url.parse(database_url_bytes)
+    'default': dj_database_url.config(
+        default='postgres://students_qrjz_user:nLtGU72u6MbQNbi0GR2FtQa1qGCIIDZJ@dpg-cp2nb7q1hbls7381g6gg-a.oregon-postgres.render.com/students_qrjz')
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
