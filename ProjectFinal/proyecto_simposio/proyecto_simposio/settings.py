@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-!zncn*&g6-5#azw5*hswtkw%_!-2m)fa5#u7qo5wsgsomk%ptc
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [*]
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -153,10 +153,11 @@ EMAIL_HOST_PASSWORD = 'oqfz nebg gfit nnnk'
 # DEFAULT_FILE_STORAGE = 'storages.backends.render.RenderMediaStorage'
 DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
 
-
+'''''''''
 # Configuración de Render Files
 RENDER_STORAGE = {
     'ACCESS_KEY_ID': os.environ.get('RENDER_ACCESS_KEY_ID'),
     'SECRET_ACCESS_KEY': os.environ.get('RENDER_SECRET_ACCESS_KEY'),
     'BUCKET_NAME': os.environ.get('RENDER_BUCKET_NAME'),
 }
+'''''''''
