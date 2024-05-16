@@ -17,10 +17,15 @@ Including another URLconf
 # proyecto_simposio/urls.py
 from django.urls import path
 from simposio_app import views
+from django.contrib import admin
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
+    path('admin/', admin.site.urls),
     path('', views.index, name='index'),
     path('registrar-estudiante/', views.registrar_estudiante, name='registrar_estudiante'),
-    path('registrar-expositor/', views.registrar_expositor, name='registrar_expositor'),  # Agrega esta línea
-    # Otras rutas aquí según sea necesario
+    path('registrar-expositor/', views.registrar_expositor, name='registrar_expositor'),  
+    path('confirmar-asistencia/<uuid:qr_code>/', views.confirmar_asistencia, name='confirmar_asistencia'),
 ]
+
+urlpatterns += staticfiles_urlpatterns()

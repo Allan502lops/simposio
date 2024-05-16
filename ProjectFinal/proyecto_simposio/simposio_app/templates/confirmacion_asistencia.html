@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmación de Asistencia</title>
+</head>
+<body>
+    <h1>Confirmación de Asistencia al Simposio</h1>
+    <p>Hola {{ estudiante.nombres }},</p>
+    <p>¡Gracias por confirmar tu asistencia al Simposio!</p>
+    <p>A continuación, se muestra la información de tu registro:</p>
+    <ul>
+        <li><strong>Nombre:</strong> {{ estudiante.nombres }} {{ estudiante.apellidos }}</li>
+        <li><strong>Carnet:</strong> {{ estudiante.carnet }}</li>
+        <li><strong>Ciclo:</strong> {{ estudiante.semestre_o_ciclo }}</li>
+    </ul>
+    <p>Esperamos verte en el evento.</p>
+</body>
+</html>

@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import dj_database_url
+import os
+
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -55,7 +59,7 @@ ROOT_URLCONF = 'proyecto_simposio.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -68,12 +72,14 @@ TEMPLATES = [
     },
 ]
 
+
 WSGI_APPLICATION = 'proyecto_simposio.wsgi.application'
 
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -84,6 +90,9 @@ DATABASES = {
         'PORT': '5432',
     }
 }
+"""
+
+
 
 
 # Password validation
@@ -121,6 +130,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+MEDIA_URL = 'media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -135,3 +145,16 @@ EMAIL_PORT = 587  # Puerto TLS de Gmail
 EMAIL_USE_TLS = True  # Usar TLS para la conexión
 EMAIL_HOST_USER = 'alanlopez2p030@gmail.com'
 EMAIL_HOST_PASSWORD = 'oqfz nebg gfit nnnk'
+
+
+# Configuración para usar Render Files como almacenamiento de medios
+# DEFAULT_FILE_STORAGE = 'storages.backends.render.RenderMediaStorage'
+DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+
+
+# Configuración de Render Files
+RENDER_STORAGE = {
+    'ACCESS_KEY_ID': os.environ.get('RENDER_ACCESS_KEY_ID'),
+    'SECRET_ACCESS_KEY': os.environ.get('RENDER_SECRET_ACCESS_KEY'),
+    'BUCKET_NAME': os.environ.get('RENDER_BUCKET_NAME'),
+}
