@@ -3,34 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de Expositores</title>
+    <title>Registro de Estudiantes</title>
     <!-- Enlace a Tailwind CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
-</head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16" rel="stylesheet">
+    <!-- Enlace a Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        /* Estilos personalizados para el formulario */
+        /* Estilos personalizados */
+        body {
+            background: linear-gradient(135deg, #93c5fd, #fecaca); /* Azul claro y Rojo claro */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
         .form-container {
             background-color: #ffffff;
             border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
             width: 100%;
-            max-width: 600px; /* Aumento del tamaño del formulario */
-            padding: 40px;
-            font-family: 'Roboto', sans-serif;
+            max-width: 500px;
+            padding: 20px;
+            box-sizing: border-box;
+            position: relative;
+            z-index: 1;
+            margin-top: 20px; /* Add a margin-top for better spacing */
         }
 
-        .form-label {
-            color: #4b5563; /* Color del texto */
-            font-size: 1.2rem; /* Tamaño de la fuente */
-            font-weight: 500; /* Grosor de la fuente */
-            margin-bottom: 0.2rem; /* Espacio entre etiquetas */
-            display: block; /* Mostrar en bloque */
-            transition: color 0.3s; /* Transición de color al pasar el cursor */
-        }
-
-        .form-label:hover {
-            color: #10b981; /* Cambio de color al pasar el cursor */
+        .form-container h1 {
+            color: #1f2937;
+            margin-bottom: 20px;
+            font-size: 2rem;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
         }
 
         .form-input {
@@ -38,65 +52,111 @@
             margin-bottom: 20px;
             border-radius: 8px;
             border: 1px solid #d1d5db;
-            outline: none;
             width: 100%;
-            transition: box-shadow 0.3s; /* Transición de sombra al pasar el cursor */
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            font-size: 1rem;
         }
 
         .form-input:focus {
-            box-shadow: 0 0 4px rgba(16, 185, 129, 0.5); /* Efecto de sombra al enfocar */
+            border-color: #60a5fa; /* Azul claro */
+            box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2); /* Azul claro */
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+            color: #6b7280;
+            text-align: left;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .form-input:focus + .form-label,
+        .form-label:hover {
+            color: #60a5fa; /* Azul claro */
         }
 
         .form-submit-button {
-            background-color: #10b981;
+            background-color: #f87171; /* Rojo claro */
             color: #ffffff;
             font-weight: bold;
             padding: 12px 20px;
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            transition: background-color 0.3s;
             width: 100%;
-            margin-top: 20px;
+            transition: background-color 0.3s, transform 0.3s;
+            font-size: 1rem;
         }
 
         .form-submit-button:hover {
-            background-color: #059669;
+            background-color: #ef4444; /* Rojo más oscuro */
+            transform: scale(1.05);
+        }
+
+        .logo-container {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .logo {
+            width: 100px;
+            height: auto;
+        }
+
+        .form-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 150px;
+            background: #60a5fa; /* Azul claro */
+            border-radius: 15px 15px 0 0;
+            z-index: -1;
         }
     </style>
-    <div class="form-container px-4">
-        <h1 class="text-3xl font-bold text-center mb-4 text-gray-800">Registro de Expositores</h1>
+</head>
+<body>
+    <div class="form-container">
+        <div class="logo-container">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/15/Escudo_de_la_universidad_Mariano_Gálvez_Guatemala.svg" alt="Logo de la Universidad" class="logo">
+        </div>
+        <h1>Bienvenido al Registro de Expositores del Simposio de Tecnología UMG</h1>
         <form id="registro-form" method="post" enctype="multipart/form-data" class="space-y-6">
             {% csrf_token %}
             <div class="mb-4">
                 <label for="nombres" class="form-label">Nombres</label>
-                <input type="text" name="nombres" id="nombres" class="form-input p-2 focus:ring-green-500 focus:border-green-500" required>
+                <input type="text" name="nombres" class="form-input p-2 focus:ring-green-500 focus:border-green-500" required>
             </div>
             <div class="mb-4">
                 <label for="apellidos" class="form-label">Apellidos</label>
-                <input type="text" name="apellidos" id="apellidos" class="form-input p-2 focus:ring-green-500 focus:border-green-500" required>
+                <input type="text" name="apellidos" class="form-input p-2 focus:ring-green-500 focus:border-green-500" required>
             </div>
             <div class="mb-4">
                 <label for="correo_electronico" class="form-label">Correo Electrónico</label>
-                <input type="email" name="correo_electronico" id="correo_electronico" class="form-input p-2 focus:ring-green-500 focus:border-green-500" required>
+                <input type="email" name="correo_electronico" class="form-input p-2 focus:ring-green-500 focus:border-green-500" required>
             </div>
             <div class="mb-4">
                 <label for="telefono" class="form-label">Teléfono</label>
-                <input type="text" name="telefono" id="telefono" class="form-input p-2 focus:ring-green-500 focus:border-green-500" required>
+                <input type="text" name="telefono" class="form-input p-2 focus:ring-green-500 focus:border-green-500" required>
             </div>
             <div class="mb-4">
                 <label for="especialidad" class="form-label">Especialidad</label>
-                <input type="text" name="especialidad" id="especialidad" class="form-input p-2 focus:ring-green-500 focus:border-green-500" required>
+                <input type="text" name="especialidad" class="form-input p-2 focus:ring-green-500 focus:border-green-500" required>
             </div>
             <div class="mb-4">
                 <label for="institucion" class="form-label">Institución</label>
-                <input type="text" name="institucion" id="institucion" class="form-input p-2 focus:ring-green-500 focus:border-green-500" required>
+                <input type="text" name="institucion" class="form-input p-2 focus:ring-green-500 focus:border-green-500" required>
             </div>
             <div class="mb-4">
                 <label for="tema_a_impartir" class="form-label">Tema a Impartir</label>
-                <input type="text" name="tema_a_impartir" id="tema_a_impartir" class="form-input p-2 focus:ring-green-500 focus:border-green-500" required>
+                <input type="text" name="tema_a_impartir" class="form-input p-2 focus:ring-green-500 focus:border-green-500" required>
             </div>
-            <button type="submit" class="form-submit-button">Registrar Expositor</button>
+            <button type="submit" class="form-submit-button">Registrar Estudiante</button>
         </form>
     </div>
 </body>
