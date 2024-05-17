@@ -14,4 +14,4 @@ class EstudianteForm(forms.ModelForm):
 class ExpositorForm(forms.ModelForm):
     class Meta:
         model = Expositor
-        fields = '__all__'
+        exclude = ['qr_code']

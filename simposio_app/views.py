@@ -15,6 +15,8 @@ from .models import Estudiante, Expositor, Pago
 from django.contrib.auth import authenticate, login
 from django.contrib import admin
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
+from io import BytesIO
 
 
 def estadisticas(request):
@@ -95,45 +97,43 @@ def registrar_estudiante(request):
         if form.is_valid():
             estudiante = form.save(commit=False)
 
-            # Subir la imagen de la boleta de pago
+            # Subir y comprimir la imagen de la boleta de pago
             if 'imagen_boleta_pago' in request.FILES:
                 imagen_boleta_pago = request.FILES['imagen_boleta_pago']
-
-                # Comprimir la imagen en dado caso sea necesario
                 imagen_boleta_comprimida = comprimir_imagen(imagen_boleta_pago)
+                buffer = BytesIO()
+                imagen_boleta_comprimida.save(
+                    buffer, format="JPEG", quality=50)
+                estudiante.imagen_boleta_pago = buffer.getvalue()
 
-                # Asignar la imagen comprimida al estudiante
-                estudiante.imagen_boleta_pago = imagen_boleta_comprimida
-
-          # Generar el código QR único
+            # Generar el código QR único
             qr_code = uuid.uuid4()
-
-            # Asociar el QR único al estudiante
             estudiante.qr_code = qr_code
+
+            # Generar el código QR
+            qr_data = f"Carnet: {estudiante.carnet}, Nombre: {
+                estudiante.nombre}"
+            qr = qrcode.make(qr_data)
+
+            # Guardar el código QR como un archivo binario
+            qr_buffer = BytesIO()
+            qr.save(qr_buffer, format="PNG")
+            estudiante.qr_code_image = qr_buffer.getvalue()
 
             # Guardar el estudiante en la base de datos
             estudiante.save()
 
-            # Generar el código QR
-            qr_data = f"Carnet: {estudiante.carnet}, Nombre: {
-                estudiante.nombres} {estudiante.apellidos}"
-            qr = qrcode.make(qr_data)
-
-            # Guardar el código QR como un archivo en media/qrcodes
-            qr_path = f'media/qrcodes/{estudiante.carnet}.png'
-            qr.save(qr_path)
-
             # Enviar el código QR por correo electrónico
-            enviar_correo_con_qr(estudiante.correo_electronico, qr_path)
+            enviar_correo_con_qr(
+                estudiante.correo_electronico, estudiante.qr_code_image)
 
             return HttpResponse("El estudiante ha sido registrado exitosamente.")
     else:
         form = EstudianteForm()
-
     return render(request, 'formulario_registro_estudiante.html', {'form': form})
 
 
-def enviar_correo_con_qr(correo_electronico, qr_path):
+def enviar_correo_con_qr(correo_electronico, qr_code_image):
     # Configurar el correo electrónico
     email = EmailMessage(
         subject='Confirmación de asistencia al simposio',
@@ -142,7 +142,7 @@ def enviar_correo_con_qr(correo_electronico, qr_path):
     )
 
     # Adjuntar el código QR al correo electrónico
-    email.attach_file(qr_path)
+    email.attach('qr_code.png', qr_code_image, 'image/png')
 
     # Enviar el correo electrónico
     email.send()
@@ -151,14 +151,13 @@ def enviar_correo_con_qr(correo_electronico, qr_path):
 def comprimir_imagen(imagen):
     # Abre la imagen utilizando PIL
     img = Image.open(imagen)
+    buffer = BytesIO()
 
     # Comprime la imagen reduciendo su calidad a un 50%
     img_comprimida = img.convert('RGB')
-    img_comprimida.save(imagen.name, optimize=True, quality=50)
+    img_comprimida.save(buffer, format="JPEG", quality=50)
 
-    return img_comprimida
-
-    # Logica para manejar la asistencia del alumno
+    return Image.open(BytesIO(buffer.getvalue()))
 
 
 def confirmar_asistencia(request, qr_code):
@@ -174,7 +173,7 @@ def confirmar_asistencia(request, qr_code):
         estudiante.save()
 
         # Redireccionar a la página de confirmación de asistencia
-        return render(request, 'templates/confirmacion_asistencia.html', {'estudiante': estudiante})
+        return render(request, 'confirmacion_asistencia.html', {'estudiante': estudiante})
     else:
         # Si el QR ya ha sido escaneado, redirigir a alguna página de error
         return HttpResponseRedirect(reverse('pagina_de_error'))
@@ -220,6 +219,11 @@ def enviar_correo_confirmacion_expositor(expositor):
         body='¡Gracias por registrarte como expositor en nuestro simposio!',
         to=[expositor.correo_electronico],
     )
+
+    # Adjuntar el archivo QR si existe
+    qr_file = expositor.qr_code
+    if qr_file:
+        email.attach(qr_file.name, qr_file.read(), 'image/png')
 
     # Enviar el correo electrónico
     email.send()
