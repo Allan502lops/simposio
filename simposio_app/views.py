@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from io import BytesIO
+from django.http import JsonResponse
 
 
 def estadisticas(request):
@@ -111,7 +112,8 @@ def registrar_estudiante(request):
             estudiante.qr_code = qr_code
 
             # Generar el código QR
-            qr_data = f"Carnet: {estudiante.carnet}, Nombre: {estudiante.nombres}"
+            qr_data = f"Carnet: {estudiante.carnet}, Nombre: {
+                estudiante.nombres}"
             qr = qrcode.make(qr_data)
 
             # Guardar el código QR como un archivo binario
@@ -160,6 +162,19 @@ def comprimir_imagen(imagen):
 
 
 def confirmar_asistencia(request, qr_code):
+    # Buscar al estudiante en la base de datos
+    estudiante = get_object_or_404(Estudiante, qr_code=qr_code)
+
+    # Actualizar el estado de asistencia a verdadero
+    estudiante.asistencia = True
+    estudiante.save()
+
+    # Devolver una respuesta JSON indicando que la asistencia ha sido confirmada
+    return JsonResponse({'mensaje': 'La asistencia ha sido confirmada para el estudiante.'})
+
+
+'''''
+def confirmar_asistencia(request, qr_code):
     estudiante = get_object_or_404(Estudiante, qr_code=qr_code)
     if not estudiante.qr_escaneado:
         # Actualizar el estado del QR
@@ -176,6 +191,8 @@ def confirmar_asistencia(request, qr_code):
     else:
         # Si el QR ya ha sido escaneado, redirigir a alguna página de error
         return HttpResponseRedirect(reverse('pagina_de_error'))
+
+'''''
 
 
 def registrar_expositor(request):
