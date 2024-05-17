@@ -111,7 +111,7 @@ def registrar_estudiante(request):
             estudiante.qr_code = qr_code
 
             # Generar el código QR
-            qr_data = f"Carnet: {estudiante.carnet}, Nombre: {estudiante.nombre}"
+            qr_data = f"Carnet: {estudiante.carnet}, Nombre: {estudiante.nombres}"
             qr = qrcode.make(qr_data)
 
             # Guardar el código QR como un archivo binario
