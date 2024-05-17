@@ -130,7 +130,7 @@ def registrar_estudiante(request):
             return HttpResponse("El estudiante ha sido registrado exitosamente.")
     else:
         form = EstudianteForm()
-    return render(request, 'formulario_registro_estudiante.html', {'form': form})
+    return render(request, 'index.html', {'form': form})
 
 
 def enviar_correo_con_qr(correo_electronico, qr_code_image):
