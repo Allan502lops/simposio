@@ -111,8 +111,7 @@ def registrar_estudiante(request):
             estudiante.qr_code = qr_code
 
             # Generar el código QR
-            qr_data = f"Carnet: {estudiante.carnet}, Nombre: {
-                estudiante.nombre}"
+            qr_data = f"Carnet: {estudiante.carnet}, Nombre: {estudiante.nombre}"
             qr = qrcode.make(qr_data)
 
             # Guardar el código QR como un archivo binario
@@ -196,22 +195,6 @@ def registrar_expositor(request):
     return render(request, 'formulario_registro_expositor.html', {'form': form})
 
 
-def enviar_correo_con_qr2(estudiante):
-    # Configurar el correo electrónico
-    email = EmailMessage(
-        subject='Confirmación de asistencia al simposio',
-        body='¡Gracias por registrarte! Adjunto se encuentra tu código QR para ingresar al evento.',
-        to=[estudiante.correo_electronico],
-    )
-
-    # Adjuntar el código QR al correo electrónico
-    qr_file = estudiante.qr_code
-    email.attach(qr_file.name, qr_file.read(), 'image/png')
-
-    # Enviar el correo electrónico
-    email.send()
-
-
 def enviar_correo_confirmacion_expositor(expositor):
     # Configurar el correo electrónico
     email = EmailMessage(
@@ -220,13 +203,7 @@ def enviar_correo_confirmacion_expositor(expositor):
         to=[expositor.correo_electronico],
     )
 
-    # Adjuntar el archivo QR si existe
-    qr_file = expositor.qr_code
-    if qr_file:
-        email.attach(qr_file.name, qr_file.read(), 'image/png')
-
     # Enviar el correo electrónico
     email.send()
-
 
 # reporte

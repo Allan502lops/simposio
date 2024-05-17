@@ -33,7 +33,6 @@ class Expositor(models.Model):
     institucion = models.CharField(max_length=100)
     tema_a_impartir = models.CharField(max_length=255)
     fecha_registro = models.DateField(auto_now_add=True)
-    qr_code = models.ImageField(upload_to='qr_codes/', blank=True, null=True)
 
     def __str__(self):
         return f"{self.nombres} {self.apellidos}"
