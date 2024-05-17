@@ -1,18 +1,117 @@
-<!-- index.html -->
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página Principal</title>
+    <title>Registro de Estudiantes</title>
+    <!-- Enlace a Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16" rel="stylesheet">
+  
 </head>
 <body>
-    <h1>Bienvenido al Simposio</h1>
-    <p>Por favor, seleccione una opción para registrarse:</p>
-    <ul>
-        <li><a href="{% url 'registrar_estudiante' %}">Registrarse como Estudiante</a></li>
-        <li><a href="{% url 'registrar_expositor' %}">Registrarse como Expositor</a></li>
-    </ul>
+    <div class="form-container">
+        <h1 class="text-3xl font-bold text-center mb-4 text-gray-800">Registro de Estudiantes</h1>
+        <form id="registro-form" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-4">
+                <input type="text" name="nombres" class="form-input p-2 w-full focus:ring-green-500 focus:border-green-500" required>
+                <label for="nombres" class="form-label text-gray-500 uppercase font-semibold">Nombres</label>
+            </div>
+            <div class="mb-4">
+                <input type="text" name="apellidos" class="form-input p-2 w-full focus:ring-green-500 focus:border-green-500" required>
+                <label for="apellidos" class="form-label text-gray-500 uppercase font-semibold">Apellidos</label>
+            </div>
+            <div class="mb-4">
+                <input type="text" name="carnet" class="form-input p-2 w-full focus:ring-green-500 focus:border-green-500" required>
+                <label for="carnet" class="form-label text-gray-500 uppercase font-semibold">Carnet</label>
+            </div>
+            <div class="mb-4">
+                <input type="email" name="correo_electronico" class="form-input p-2 w-full focus:ring-green-500 focus:border-green-500" required>
+                <label for="correo_electronico" class="form-label text-gray-500 uppercase font-semibold">Correo Electrónico</label>
+            </div>
+            <div class="mb-4">
+                <input type="text" name="telefono" class="form-input p-2 w-full focus:ring-green-500 focus:border-green-500" required>
+                <label for="telefono" class="form-label text-gray-500 uppercase font-semibold">Teléfono</label>
+            </div>
+            <div class="mb-4">
+                <input type="number" name="edad" class="form-input p-2 w-full focus:ring-green-500 focus:border-green-500" required>
+                <label for="edad" class="form-label text-gray-500 uppercase font-semibold">Edad</label>
+            </div>
+            <div class="mb-4">
+                <input type="text" name="semestre_o_ciclo" class="form-input p-2 w-full focus:ring-green-500 focus:border-green-500" required>
+                <label for="semestre_o_ciclo" class="form-label text-gray-500 uppercase font-semibold">Semestre o Ciclo</label>
+            </div>
+            <div class="mb-4">
+                <input type="file" name="boleta_de_pago" class="form-input p-2 w-full focus:ring-green-500 focus:border-green-500" required>
+                <label for="boleta_de_pago" class="form-label text-gray-500 uppercase font-semibold">Boleta de Pago</label>
+            </div>
+            <div class="mb-4">
+                <input type="text" name="numero_de_boleta" class="form-input p-2 w-full focus:ring-green-500 focus:border-green-500" required>
+                <label for="numero_de_boleta" class="form-label text-gray-500 uppercase font-semibold">Número de Boleta</label>
+            </div>
+            <div class="mb-4">
+                <input type="text" name="talla_de_camiseta" class="form-input p-2 w-full focus:ring-green-500 focus:border-green-500" required>
+                <label for="talla_de_camiseta" class="form-label text-gray-500 uppercase font-semibold">Talla de Camiseta</label>
+            </div>
+            <button type="submit" class="form-submit-button w-full">Registrar estudiante</button>
+        </form>
+    </div>
 </body>
+
+<style>
+    /* Estilos personalizados */
+body {
+    background-color: #f3f4f6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: 'Roboto', sans-serif;
+}
+
+.form-container {
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    width: 400px;
+    padding: 40px;
+}
+
+.form-input:focus ~ .form-label, .form-label:hover {
+    color: #10b981;
+    transform: translateY(-30px);
+    font-size: 0.8rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-label {
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.form-input {
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    outline: none;
+}
+
+.form-submit-button {
+    background-color: #10b981;
+    color: #ffffff;
+    font-weight: bold;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.form-submit-button:hover {
+    background-color: #059669;
+}
+
+</style>
 </html>
