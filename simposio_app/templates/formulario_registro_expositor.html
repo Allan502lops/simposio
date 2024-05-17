@@ -1,33 +1,103 @@
-<!-- formulario_registro_expositor.html -->
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de Expositor</title>
-    <!-- Enlace a Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Registro de Expositores</title>
+    <!-- Enlace a Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-    <div class="container">
-        <h2 class="mt-5">Registro de Expositor</h2>
-        <form method="post" enctype="multipart/form-data">
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <style>
+        /* Estilos personalizados para el formulario */
+        .form-container {
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 600px; /* Aumento del tamaño del formulario */
+            padding: 40px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .form-label {
+            color: #4b5563; /* Color del texto */
+            font-size: 1.2rem; /* Tamaño de la fuente */
+            font-weight: 500; /* Grosor de la fuente */
+            margin-bottom: 0.2rem; /* Espacio entre etiquetas */
+            display: block; /* Mostrar en bloque */
+            transition: color 0.3s; /* Transición de color al pasar el cursor */
+        }
+
+        .form-label:hover {
+            color: #10b981; /* Cambio de color al pasar el cursor */
+        }
+
+        .form-input {
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            outline: none;
+            width: 100%;
+            transition: box-shadow 0.3s; /* Transición de sombra al pasar el cursor */
+        }
+
+        .form-input:focus {
+            box-shadow: 0 0 4px rgba(16, 185, 129, 0.5); /* Efecto de sombra al enfocar */
+        }
+
+        .form-submit-button {
+            background-color: #10b981;
+            color: #ffffff;
+            font-weight: bold;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .form-submit-button:hover {
+            background-color: #059669;
+        }
+    </style>
+    <div class="form-container px-4">
+        <h1 class="text-3xl font-bold text-center mb-4 text-gray-800">Registro de Expositores</h1>
+        <form id="registro-form" method="post" enctype="multipart/form-data" class="space-y-6">
             {% csrf_token %}
-            <div class="form-group">
-                {{ form.nombres.label }}
-                {{ form.nombres }}
+            <div class="mb-4">
+                <label for="nombres" class="form-label">Nombres</label>
+                <input type="text" name="nombres" id="nombres" class="form-input p-2 focus:ring-green-500 focus:border-green-500" required>
             </div>
-            <div class="form-group">
-                {{ form.apellidos.label }}
-                {{ form.apellidos }}
+            <div class="mb-4">
+                <label for="apellidos" class="form-label">Apellidos</label>
+                <input type="text" name="apellidos" id="apellidos" class="form-input p-2 focus:ring-green-500 focus:border-green-500" required>
             </div>
-            <!-- Agrega el resto de los campos del formulario utilizando la misma estructura -->
-            <button type="submit" class="btn btn-primary">Registrar</button>
+            <div class="mb-4">
+                <label for="correo_electronico" class="form-label">Correo Electrónico</label>
+                <input type="email" name="correo_electronico" id="correo_electronico" class="form-input p-2 focus:ring-green-500 focus:border-green-500" required>
+            </div>
+            <div class="mb-4">
+                <label for="telefono" class="form-label">Teléfono</label>
+                <input type="text" name="telefono" id="telefono" class="form-input p-2 focus:ring-green-500 focus:border-green-500" required>
+            </div>
+            <div class="mb-4">
+                <label for="especialidad" class="form-label">Especialidad</label>
+                <input type="text" name="especialidad" id="especialidad" class="form-input p-2 focus:ring-green-500 focus:border-green-500" required>
+            </div>
+            <div class="mb-4">
+                <label for="institucion" class="form-label">Institución</label>
+                <input type="text" name="institucion" id="institucion" class="form-input p-2 focus:ring-green-500 focus:border-green-500" required>
+            </div>
+            <div class="mb-4">
+                <label for="tema_a_impartir" class="form-label">Tema a Impartir</label>
+                <input type="text" name="tema_a_impartir" id="tema_a_impartir" class="form-input p-2 focus:ring-green-500 focus:border-green-500" required>
+            </div>
+            <button type="submit" class="form-submit-button">Registrar Expositor</button>
         </form>
     </div>
-
-    <!-- Enlace a Bootstrap JS (si es necesario) -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

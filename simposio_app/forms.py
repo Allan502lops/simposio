@@ -14,4 +14,14 @@ class EstudianteForm(forms.ModelForm):
 class ExpositorForm(forms.ModelForm):
     class Meta:
         model = Expositor
-        exclude = ['qr_code']
+        fields = ['nombres', 'apellidos', 'correo_electronico',
+                  'telefono', 'especialidad', 'institucion', 'tema_a_impartir']
+        widgets = {
+            'nombres': forms.TextInput(attrs={'class': 'form-input', 'required': True}),
+            'apellidos': forms.TextInput(attrs={'class': 'form-input', 'required': True}),
+            'correo_electronico': forms.EmailInput(attrs={'class': 'form-input', 'required': True}),
+            'telefono': forms.TextInput(attrs={'class': 'form-input', 'required': True}),
+            'especialidad': forms.TextInput(attrs={'class': 'form-input', 'required': True}),
+            'institucion': forms.TextInput(attrs={'class': 'form-input', 'required': True}),
+            'tema_a_impartir': forms.TextInput(attrs={'class': 'form-input', 'required': True}),
+        }
