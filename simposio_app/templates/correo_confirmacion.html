@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmación de Asistencia</title>
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333333;
+        }
+
+        p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        /* Estilos del logotipo */
+        .logo {
+            max-width: 100px;
+            margin: 0 auto 20px;
+            display: block;
+        }
+
+        /* Estilos del código QR */
+        .qr-code {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /* Estilos del enlace */
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/1/15/Escudo_de_la_universidad_Mariano_G%C3%A1lvez_Guatemala.svg" alt="Logo de la Universidad Mariano Gálvez" class="logo">
+        <h1>¡Gracias por registrarte!</h1>
+        <p>Estos son los detalles de tu registro:</p>
+        <ul>
+            <li><strong>Nombre:</strong> {{ estudiante.nombres }}</li>
+            <li><strong>Carnet:</strong> {{ estudiante.carnet }}</li>
+            <li><strong>Talla de Camiseta:</strong> {{ estudiante.talla_de_camiseta }}</li>
+            <li><strong>QR Code:</strong> {{ estudiante.qr_code }}</li>
+
+        </ul>
+        <p>Adjunto encontrarás tu código QR para ingresar al evento.</p>
+        <div class="qr-code">
+            <img src="data:image/png;base64,{{ estudiante.qr_code_image }}" alt="Código QR" style="max-width: 200px;">
+        </div>
+        <p>¡Esperamos verte pronto!</p>
+    </div>
+</body>
+</html>

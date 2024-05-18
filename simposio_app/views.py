@@ -89,7 +89,12 @@ class PagoListCreate(ListView):
 
 
 def index(request):
-    return render(request, 'index.html')
+    return render(request, 'formulario_registro_estudiante.html')
+
+
+def formulario_registro_estudiante(request):
+    # Lógica para procesar datos del formulario, si es necesario
+    return render(request, 'formulario_registro_estudiante.html')
 
 
 def registrar_estudiante(request):
@@ -125,7 +130,7 @@ def registrar_estudiante(request):
 
             # Enviar el código QR por correo electrónico
             enviar_correo_con_qr(
-                estudiante.correo_electronico, estudiante.qr_code_image)
+                estudiante.correo_electronico, estudiante.qr_code_image, estudiante)
 
             return HttpResponse("El estudiante ha sido registrado exitosamente.")
     else:
@@ -133,11 +138,27 @@ def registrar_estudiante(request):
     return render(request, 'formulario_registro_estudiante.html', {'form': form})
 
 
-def enviar_correo_con_qr(correo_electronico, qr_code_image):
+def enviar_correo_con_qr(correo_electronico, qr_code_image, estudiante):
+    # Construir el mensaje del correo electrónico
+    subject = '¡Confirmación de registro exitosa para el Simposio!'
+    body = f'¡Hola {estudiante.nombres} {estudiante.apellidos}!\n\n' \
+        f'¡Gracias por registrarte para el simposio! Estamos emocionados de tenerte con nosotros.\n\n' \
+        f'Adjunto encontrarás tu código QR personalizado para ingresar al evento. Por favor, asegúrate de llevarlo y no escaneralo ya que solo se puede escanear una vez ' \
+        f'contigo el día del simposio.\n\n' \
+        f'Detalles de tu registro:\n' \
+        f'- Nombre: {estudiante.nombres}\n' \
+        f'- Apellidos: {estudiante.apellidos}\n' \
+        f'- Carnet: {estudiante.carnet}\n' \
+        f'- Código QR: {estudiante.qr_code}\n\n' \
+        f'¡Esperamos verte en el simposio y compartir esta experiencia contigo!\n\n' \
+        f'¡Gracias de nuevo y hasta pronto!\n\n' \
+        f'Atentamente,\n' \
+        f'El equipo organizador del Simposio'
+
     # Configurar el correo electrónico
     email = EmailMessage(
-        subject='Confirmación de asistencia al simposio',
-        body='¡Gracias por registrarte! Adjunto se encuentra tu código QR para ingresar al evento.',
+        subject=subject,
+        body=body,
         to=[correo_electronico],
     )
 
@@ -197,14 +218,20 @@ def registrar_expositor(request):
 
 
 def enviar_correo_confirmacion_expositor(expositor):
+    # Construir el mensaje del correo electrónico
+    subject = '¡Confirmación de registro como expositor!'
+    body = f'¡Hola {expositor.nombres}!\n\n' \
+           f'¡Gracias por registrarte como expositor en nuestro simposio! Estamos emocionados de tenerte con nosotros.\n\n' \
+           f'¡Esperamos que tengas una experiencia increíble compartiendo tu conocimiento con nuestros asistentes!\n\n' \
+           f'Atentamente,\n' \
+           f'El equipo organizador del Simposio'
+    
     # Configurar el correo electrónico
     email = EmailMessage(
-        subject='Confirmación de registro como expositor',
-        body='¡Gracias por registrarte como expositor en nuestro simposio!',
+        subject=subject,
+        body=body,
         to=[expositor.correo_electronico],
     )
 
     # Enviar el correo electrónico
     email.send()
-
-# reporte

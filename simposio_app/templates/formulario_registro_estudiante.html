@@ -6,6 +6,7 @@
     <title>Registro de Estudiantes</title>
     <!-- Enlace a Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16" rel="stylesheet">
+
     <!-- Enlace a Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
@@ -142,8 +143,9 @@
             <img src="https://upload.wikimedia.org/wikipedia/commons/1/15/Escudo_de_la_universidad_Mariano_Gálvez_Guatemala.svg" alt="Logo de la Universidad" class="logo">
         </div>
         <h1>Bienvenido al Registro de Estudiantes al Simposio del Tecnología UMG</h1>
-        <form id="registro-form" method="post" enctype="multipart/form-data">
+        <form id="registro-estudiante-form" method="post" enctype="multipart/form-data">
             {% csrf_token %}
+         
             <div class="mb-4">
                 <label for="nombres" class="form-label">Nombres</label>
                 <input type="text" name="nombres" class="form-input" required>

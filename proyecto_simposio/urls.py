@@ -22,7 +22,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index, name='index'),
+    path('', views.registrar_estudiante, name='registrar_estudiante'),  # Cambiando la ruta raíz
     path('registrar-estudiante/', views.registrar_estudiante, name='registrar_estudiante'),
     path('registrar-expositor/', views.registrar_expositor, name='registrar_expositor'),  
     path('confirmar-asistencia/<uuid:qr_code>/', views.confirmar_asistencia, name='confirmar_asistencia'),

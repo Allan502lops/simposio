@@ -123,6 +123,9 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 MEDIA_URL = 'media/'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -130,15 +133,9 @@ MEDIA_URL = 'media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# Configuración para el envío de correos electrónicos
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'  # Servidor SMTP de Gmail
-EMAIL_PORT = 587  # Puerto TLS de Gmail
-EMAIL_USE_TLS = True  # Usar TLS para la conexión
-EMAIL_USE_SSL = False  # No usar SSL
-EMAIL_HOST_USER = 'alanlopez2p030@gmail.com'
-# Asegúrate de utilizar la contraseña correcta
-EMAIL_HOST_PASSWORD = 'oqfz nebg gfit nnnk'
+STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
@@ -146,6 +143,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'alanlopez2p030@gmail.com'
 EMAIL_HOST_PASSWORD = 'oqfz nebg gfit nnnk'
+
 
 # Configuración para usar Render Files como almacenamiento de medios
 # DEFAULT_FILE_STORAGE = 'storages.backends.render.RenderMediaStorage'
